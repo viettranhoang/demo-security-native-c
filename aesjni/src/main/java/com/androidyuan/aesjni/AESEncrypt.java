@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
+import android.util.Base64;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
@@ -116,5 +117,23 @@ public class AESEncrypt {
             if (i < (arr.length - 1)) str.append(':');
         }
         return str.toString();
+    }
+
+    public static String getMD5(Context mContext) {
+        PackageInfo info;
+        String hash_key = null;
+        try {
+            info = mContext.getPackageManager().getPackageInfo(
+                    mContext.getPackageName(), PackageManager.GET_SIGNATURES);
+            for (Signature signature : info.signatures) {
+                MessageDigest md;
+                md = MessageDigest.getInstance("SHA");
+                md.update(signature.toByteArray());
+                hash_key = new String(Base64.encode(md.digest(), 0));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return hash_key;
     }
 }

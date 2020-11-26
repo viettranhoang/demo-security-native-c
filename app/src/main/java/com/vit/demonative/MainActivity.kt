@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity() {
         Log.e("code", "${SignatureTool.getSignature(applicationContext)}")
 
 
-        findViewById<EditText>(R.id.sample_text).setText("${AESEncrypt.getSHA1(applicationContext)}")
+        findViewById<EditText>(R.id.sample_text).setText("${AESEncrypt.getMD5(applicationContext)}")
     }
 
     /**
